@@ -86,12 +86,10 @@
     </style>
 </head>
 <body>
-
 <div class="form-container">
     <h2>Toma datos Posgrado</h2>
     <p>Por favor completa el formulario para que podamos contactarte con más información sobre nuestros programas.</p>
-
-    <form action="https://script.google.com/macros/s/AKfycbxJHE6ySGe8hQx1or2YbL5XEUYK5El2Bcn1wQ0f9t7AevZK1fly3Uprc-qS5LsaF0kp/exec" method="post">
+    <form id="formulario">
         <div class="form-group">
             <input type="text" name="nombres" placeholder="Nombres" required>
             <input type="text" name="apellidos" placeholder="Apellidos" required>
@@ -112,7 +110,7 @@
         <div class="form-group">
             <select name="programa" required>
                 <option value="" disabled selected>Programa de interés</option>
- <option>Especialización en Administración Financiera</option>
+                <option>Especialización en Administración Financiera</option>
                 <option>Especialización en Auditoría y Garantía de Calidad en Salud</option>
                 <option>Especialización en Fintech</option>
                 <option>Especialización en Gerencia de Mercadeo</option>
@@ -168,6 +166,35 @@
         <button type="submit" class="submit-btn">Enviar</button>
     </form>
 </div>
+<script>
+    document.getElementById("formulario").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Evita el envío tradicional del formulario
 
+        const form = event.target;
+        const formData = new FormData(form);
+        const jsonData = Object.fromEntries(formData.entries()); // Convierte a JSON
+
+        const scriptURL = "TU_URL_DE_GOOGLE_APPS_SCRIPT"; // Reemplaza con tu URL de Apps Script
+
+        try {
+            const response = await fetch(scriptURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jsonData),
+            });
+
+            if (response.ok) {
+                window.location.href = "gracias.html"; // Redirige a la página de agradecimiento
+            } else {
+                alert("Error al enviar los datos. Intenta nuevamente.");
+            }
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
+            alert("Error al enviar los datos. Verifica tu conexión.");
+        }
+    });
+</script>
 </body>
 </html>
