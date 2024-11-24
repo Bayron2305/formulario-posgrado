@@ -166,34 +166,45 @@
         <button type="submit" class="submit-btn">Enviar</button>
     </form>
 </div>
+
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+
 <script>
-    document.getElementById("formulario").addEventListener("submit", async function (event) {
-        event.preventDefault(); // Evita el envío tradicional del formulario
+    // Configuración de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyC2UG3HUn-Dkuc1PUBh37Y8O7SghUVbpLU",
+        authDomain: "guardar-datos-6a286.firebaseapp.com",
+        databaseURL: "https://guardar-datos-6a286-default-rtdb.firebaseio.com",
+        projectId: "guardar-datos-6a286",
+        storageBucket: "guardar-datos-6a286.firebasestorage.app",
+        messagingSenderId: "150700319422",
+        appId: "1:150700319422:web:387fb072986c69822fb4ef"
+    };
 
-        const form = event.target;
-        const formData = new FormData(form);
-        const jsonData = Object.fromEntries(formData.entries()); // Convierte a JSON
+    // Inicializar Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        const scriptURL = "https://script.google.com/macros/s/AKfycbwo9313oP0sq7du12z6S4eUvSJoJCvjyy6xdBiBBKWLTMKbQQKMMekKrfBSYcuKjt9y1A/exec"; // Reemplaza con tu URL de Apps Script
+    // Guardar los datos en Firebase
+    document.getElementById("formulario").addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita el envío estándar del formulario
 
-        try {
-            const response = await fetch(scriptURL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(jsonData),
-            });
+        // Capturar los datos del formulario
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
 
-            if (response.ok) {
+        // Enviar los datos a Firebase
+        firebase.database().ref('datos/').push(data)
+            .then(() => {
+                alert("Datos guardados correctamente.");
                 window.location.href = "gracias.html"; // Redirige a la página de agradecimiento
-            } else {
-                alert("Error al enviar los datos. Intenta nuevamente.");
-            }
-        } catch (error) {
-            console.error("Error al enviar el formulario:", error);
-            alert("Error al enviar los datos. Verifica tu conexión.");
-        }
+            })
+            .catch((error) => {
+                console.error("Error al guardar los datos:", error);
+                alert("Hubo un error al guardar los datos. Intenta nuevamente.");
+            });
     });
 </script>
 </body>
