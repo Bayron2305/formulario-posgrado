@@ -168,24 +168,26 @@
 </div>
 
 <!-- Firebase Scripts -->
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-<script>
-    // Configuración de Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyC2UG3HUn-Dkuc1PUBh37Y8O7SghUVbpLU",
-        authDomain: "guardar-datos-6a286.firebaseapp.com",
-        databaseURL: "https://guardar-datos-6a286-default-rtdb.firebaseio.com",
-        projectId: "guardar-datos-6a286",
-        storageBucket: "guardar-datos-6a286.firebasestorage.app",
-        messagingSenderId: "150700319422",
-        appId: "1:150700319422:web:387fb072986c69822fb4ef"
-    };
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC2UG3HUn-Dkuc1PUBh37Y8O7SghUVbpLU",
+    authDomain: "guardar-datos-6a286.firebaseapp.com",
+    databaseURL: "https://guardar-datos-6a286-default-rtdb.firebaseio.com",
+    projectId: "guardar-datos-6a286",
+    storageBucket: "guardar-datos-6a286.firebasestorage.app",
+    messagingSenderId: "150700319422",
+    appId: "1:150700319422:web:387fb072986c69822fb4ef"
+  };
 
-    // Inicializar Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 
     // Guardar los datos en Firebase
     document.getElementById("formulario").addEventListener("submit", function (event) {
